@@ -1,11 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 function Login(){
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
+    const navigate=useNavigate();
     const handleSubmit=(e)=>{
         e.preventDefault();
+        axios.post("http://localhost:5000/login",{email,password})
+        .then(res=>{
+            console.log(res)
+            if(res.data==="success") navigate("/")
+            else alert("User not found");
+        })
+        .catch(e=>console.log(e));
     }
     return (
         <div>
